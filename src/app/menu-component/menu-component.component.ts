@@ -12,7 +12,7 @@ export class MenuComponentComponent {
   startSound = new Audio('/assets/startSoundEffect.mp3');
 
   constructor(private router: Router) {
-    this.startSound.volume = 0.2;
+    this.startSound.volume = 0.3;
   }
 
   startGame() {
