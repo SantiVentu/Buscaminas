@@ -5,7 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Autor
 Santiago Venturini
 
-##Mail
+Mail
 santiagoluisventurini@gmail.com
 
 # Características
