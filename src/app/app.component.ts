@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./navbar/navbar.component";
 import { BoardComponentComponent } from "./board-component/board-component.component";
@@ -13,16 +13,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent  implements OnInit{
   title = 'buscaminasAngular';
 
 
   isSoundOn = true;
   audio = new Audio('/assets/menuSoundEffect.mp3');
-  
+
   constructor() {
-    this.audio.volume = 0.2;
 }
+  ngOnInit(): void {
+    this.audio.loop = true;  // Hacer que el sonido se repita en bucle
+    this.audio.volume = 0.3;
+    this.playMusic();
+  }
 
   toggleSound() {
     this.isSoundOn = !this.isSoundOn;
@@ -33,4 +37,8 @@ export class AppComponent {
     }
   }
 
+  playMusic(): void {
+    this.audio.play().catch(error => {
+    });
+  }
 }
