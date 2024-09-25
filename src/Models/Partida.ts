@@ -3,6 +3,6 @@ export interface Partida {
   startTime: Date;
   endTime: Date;
   difficulty: string;
-  totalTimeSpent: number; 
+  totalTimeSpent: number;
   status: 'Ganado' | 'Perdido';
 }
