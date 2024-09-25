@@ -34,8 +34,7 @@ export class BoardComponentComponent implements OnInit {
   resetTimer: boolean = false;
   private gameConfigSubscription!: Subscription;
   private gameStateSubscription!: Subscription;
-  loseSound = new Audio('/assets/loseSoundEffect.mp3');
-  winSound = new Audio('/assets/winSoundEffect.mp3');
+
   constructor(private _gameService: GameService, private _gameState: StateService, private router: Router) { };
 
   ngOnInit(): void {
@@ -183,30 +182,24 @@ export class BoardComponentComponent implements OnInit {
     return row >= 0 && row < this.rows && col >= 0 && col < this.cols;
   }
 
-
   revelarCelda(row: number, col: number) {
-    let debeFinalizar = false;
+    let mensaje: string | null = null;
     if (this.gameOver || this.board[row][col].revelada || this.board[row][col].flagged) {
-      debeFinalizar = true;
+      return; // No hay nada más que hacer
     }
-    if (!debeFinalizar) {
-      this.board[row][col].revelada = true;
-      if (this.board[row][col].tieneMina) {
-        this.gameOver = true;
-        this.loseSound.play();
-        this.revelarTodasLasMinas();
-        alert('Game Over! Pisaste una mina.');
-        this.detenerTemporizador = true;
-        debeFinalizar = true;
-      }
-    }
-    if (!debeFinalizar && this.board[row][col].minasAdjacentes === 0) {
+    this.board[row][col].revelada = true;
+
+    if (this._gameState.checkGameOver(this.board, row, col)) {
+      mensaje = 'Game Over! Pisaste una mina.';
+    } else if (this._gameState.checkWin(this.board, this.rows, this.cols, this.mines)) {
+      mensaje = '¡Felicidades! Ganaste el juego.';
+    } else if (this.board[row][col].minasAdjacentes === 0) {
       this.revelarCeldasAdjacentes(row, col);
     }
-    if (!debeFinalizar) {
-
-      this.checkWin();
+    if (mensaje) {
+      alert(mensaje);
     }
+    return;
   }
 
 
@@ -254,26 +247,26 @@ export class BoardComponentComponent implements OnInit {
     this.gameWon = false;
   }
 
-  checkWin() {
-    let celdasReveladas = 0;
-    let totalCells = this.rows * this.cols;
-    let mineCells = this.mines;
+  // checkWin() {
+  //   let celdasReveladas = 0;
+  //   let totalCells = this.rows * this.cols;
+  //   let mineCells = this.mines;
 
-    for (let row = 0; row < this.rows; row++) {
-      for (let col = 0; col < this.cols; col++) {
-        if (this.board[row][col].revelada) {
-          celdasReveladas++;
-        }
-      }
-    }
+  //   for (let row = 0; row < this.rows; row++) {
+  //     for (let col = 0; col < this.cols; col++) {
+  //       if (this.board[row][col].revelada) {
+  //         celdasReveladas++;
+  //       }
+  //     }
+  //   }
 
-    if (celdasReveladas === totalCells - mineCells) {
-      this.winSound.play();
-      this.gameWon = true;
-      this.detenerTemporizador = true;
-      alert('¡Felicidades! Ganaste el juego.');
-    }
-  }
+  //   if (celdasReveladas === totalCells - mineCells) {
+  //     this.winSound.play();
+  //     this.gameWon = true;
+  //     this.detenerTemporizador = true;
+  //     alert('¡Felicidades! Ganaste el juego.');
+  //   }
+  // }
 
   colocarBandera(event: MouseEvent, row: number, col: number) {
     event.preventDefault();

@@ -14,6 +14,10 @@ interface GameState {
 })
 
 export class StateService {
+  loseSound = new Audio('/assets/loseSoundEffect.mp3');
+  winSound = new Audio('/assets/winSoundEffect.mp3');
+  detenerTemporizador: boolean = false;
+
   private estadoInicial: GameState = {
     board: [],
     banderasRestantes: 0,
@@ -114,6 +118,61 @@ export class StateService {
 
   private isValidCell(row: number, col: number, rows: number, cols: number): boolean {
     return row >= 0 && row < rows && col >= 0 && col < cols;
+  }
+
+  checkGameOver(board: Cell[][], row: number, col: number): boolean {
+    // Si se revela una mina, es Game Over
+    if (board[row][col].tieneMina) {
+      this.loseSound.play();
+      this.revelarTodasLasMinas(board);
+      this.detenerTemporizador = true;
+
+      // Actualizar el estado de "game over"
+      const gameState = this.gameStateSubject.value;
+      this.guardarEstado({ ...gameState, gameOver: true });
+      return true;
+    }
+    return false;
+  }
+
+  checkWin(board: Cell[][], rows: number, cols: number, mines: number): boolean {
+    let celdasReveladas = 0;
+    const totalCells = rows * cols;
+    const mineCells = mines;
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        if (board[row][col].revelada) {
+          celdasReveladas++;
+        }
+      }
+    }
+
+    if (celdasReveladas === totalCells - mineCells) {
+      this.winSound.play();
+      this.detenerTemporizador = true;
+
+      // Actualizar el estado de "game won"
+      const gameState = this.gameStateSubject.value;
+      this.guardarEstado({ ...gameState, gameOver: true });
+      return true;
+    }
+
+    return false;
+  }
+
+  private revelarTodasLasMinas(board: Cell[][]) {
+    for (let row = 0; row < board.length; row++) {
+      for (let col = 0; col < board[row].length; col++) {
+        if (board[row][col].tieneMina && !board[row][col].flagged) {
+          board[row][col].revelada = true;
+        } else if (!board[row][col].tieneMina && board[row][col].flagged) {
+          board[row][col].flagged = false;
+          board[row][col].revelada = true;
+        }
+      }
+    }
+    this.guardarEstado(this.gameStateSubject.value); // Guardar el estado actualizado
   }
 
 
