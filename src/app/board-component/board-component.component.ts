@@ -108,10 +108,9 @@ export class BoardComponentComponent implements OnInit {
     const estadoGuardado = localStorage.getItem('estadoJuego');
     if (estadoGuardado) {
       this._gameState.cargarEstadoGuardado();
-
       this._gameState.gameState$.subscribe(gameState => {
-        this.board = gameState.board;
         this.banderasRestantes = gameState.banderasRestantes;
+        this.board = gameState.board;
         this.gameOver = gameState.gameOver;
       });
       alert('Juego cargado desde el progreso guardado.');
@@ -211,12 +210,12 @@ export class BoardComponentComponent implements OnInit {
      for (let row = 0; row < this.rows; row++) {
     for (let col = 0; col < this.cols; col++) {
       if (this.board[row][col].tieneMina && !this.board[row][col].flagged) {
-        // Reveal bombs that are not flagged
+
         this.board[row][col].revelada = true;
       } else if (!this.board[row][col].tieneMina && this.board[row][col].flagged) {
-        // Mark incorrect flags
-        this.board[row][col].flagged = false; // Remove the flag
-        this.board[row][col].revelada = true; // Reveal the incorrect flag
+
+        this.board[row][col].flagged = false;
+        this.board[row][col].revelada = true;
       }
     }
   }

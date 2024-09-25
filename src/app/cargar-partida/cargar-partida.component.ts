@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cargar-partida',
-  standalone: true,  // Indica que el componente es standalone
-  imports: [CommonModule],  // Agregamos CommonModule aquí
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './cargar-partida.component.html',
   styleUrls: ['./cargar-partida.component.scss']
 })
@@ -16,7 +16,6 @@ export class CargarPartidaComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Cargar las partidas guardadas desde localStorage
     const partidas = JSON.parse(localStorage.getItem('partidasGuardadas') || '[]');
     this.partidasGuardadas = partidas;
   }
@@ -26,9 +25,9 @@ export class CargarPartidaComponent implements OnInit {
     const partida = partidas.find((p: PartidaGuardada) => p.id === id);
 
     if (partida) {
-      localStorage.setItem('estadoJuego', JSON.stringify(partida.gameState));  // Guardar el estado de la partida seleccionada
-      localStorage.setItem('cargarPartida', 'true');  // Establecer la bandera para cargar la partida
-      this.router.navigate(['/board']);  // Redirigir al tablero
+      localStorage.setItem('estadoJuego', JSON.stringify(partida.gameState));
+      localStorage.setItem('cargarPartida', 'true');
+      this.router.navigate(['/board']);
     }
   }
 
@@ -37,7 +36,7 @@ export class CargarPartidaComponent implements OnInit {
     let partidas = JSON.parse(localStorage.getItem('partidasGuardadas') || '[]');
     partidas = partidas.filter((p: PartidaGuardada) => p.id !== id);
     localStorage.setItem('partidasGuardadas', JSON.stringify(partidas));
-    this.partidasGuardadas = partidas;  // Actualizar la lista en la vista
+    this.partidasGuardadas = partidas; //aca actualiza denuevo las partidas guardadas
   }
 
   volver() {

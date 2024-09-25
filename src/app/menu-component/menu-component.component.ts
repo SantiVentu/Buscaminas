@@ -17,17 +17,15 @@ export class MenuComponentComponent {
 
   startGame() {
     this.startSound.play();
-    this.router.navigate(['/board']); // Navegar a la página de configuración del juego
+    this.router.navigate(['/board']);
   }
 
   loadGame() {
-    this.router.navigate(['/cargar-partida']); // Navegar a la página de cargar partidas
+    this.router.navigate(['/cargar-partida']);
   }
 
   opciones() {
-    // Aquí podrías implementar las opciones o una navegación a otro componente
     this.router.navigate(['/setup']);
-
   }
 
 }
