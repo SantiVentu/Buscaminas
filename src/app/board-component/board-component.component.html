@@ -9,7 +9,7 @@
   </div>
   <div class="boardContainer">
     <div class="visualsContainer">
-      <app-timer [detener]="gameOver" [reset]="resetTimer"></app-timer>
+      <app-timer [detener]="gameOver" [reset]="resetTimer" ></app-timer>
       <h2> 🚩{{ banderasRestantes }}</h2>
     </div>
 
@@ -25,9 +25,11 @@
           [class.mine]="cell.revelada && cell.tieneMina"
           [class.flagged]="cell.flagged"
           (click)="revelarCelda(rowIndex, colIndex)"
-          (contextmenu)="colocarBandera($event, rowIndex, colIndex)">
-          <span *ngIf="cell.revelada && !cell.tieneMina">{{ cell.minasAdjacentes || '' }}</span>
+          (contextmenu)="colocarBandera($event, rowIndex, colIndex)"
+          >
+          <span *ngIf="cell.revelada && !cell.tieneMina" [attr.data-content]="cell.minasAdjacentes">{{ cell.minasAdjacentes || '' }}</span>
           <span *ngIf="cell.flagged">🚩</span>
+          <span *ngIf="cell.revelada && cell.tieneMina">💣</span>
         </div>
       </div>
     </div>
