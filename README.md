@@ -6,22 +6,29 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Características
+Juego clásico de Buscaminas:
 
-## Running end-to-end tests
+El usuario puede seleccionar diferentes niveles de dificultad: fácil (9x9, 10 minas), medio (16x16, 30 minas) y difícil (24x24, 80 minas).
+Implementación básica del juego con revelación de celdas, colocación de banderas y detección de minas.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+1 Guardar y cargar partidas:
+Se pueden guardar múltiples partidas en LocalStorage.
+Opción para cargar partidas guardadas.
 
-## Further help
+2 Temporizador:
+Temporizador que comienza al iniciar el juego y se detiene al ganar o perder.
+Control de sonido:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+2 Botón para activar/desactivar sonidos en la esquina superior izquierda que afecta a todo el juego.
+Efectos de sonido al iniciar el juego y durante eventos clave como ganar o perder.
+
+3 Interfaz gráfica:
+Fondo de pantalla personalizado para diferentes componentes del juego.
+Diseño responsivo para diferentes tamaños de tablero.
+Se utilizó los Alerts a modo de notificación por comodidad y tiempo, pero podria ser reemplazado por algo como SweetAlert2 
