@@ -34,6 +34,7 @@ export class BoardComponentComponent implements OnInit {
   resetTimer: boolean = false;
   private gameConfigSubscription!: Subscription;
   private gameStateSubscription!: Subscription;
+  loseSound = new Audio('/assets/loseSoundEffect.mp3');
 
   constructor(private _gameService: GameService, private _gameState: StateService, private router: Router) { };
 
@@ -192,6 +193,7 @@ export class BoardComponentComponent implements OnInit {
       this.board[row][col].revelada = true;
       if (this.board[row][col].tieneMina) {
         this.gameOver = true;
+        this.loseSound.play();
         this.revelarTodasLasMinas();
         alert('Game Over! Pisaste una mina.');
         this.detenerTemporizador = true;
@@ -211,6 +213,7 @@ export class BoardComponentComponent implements OnInit {
   volver(){
     this.router.navigate(['/menu'])
   }
+
   revelarTodasLasMinas() {
      for (let row = 0; row < this.rows; row++) {
     for (let col = 0; col < this.cols; col++) {
