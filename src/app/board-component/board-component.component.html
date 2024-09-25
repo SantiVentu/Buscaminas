@@ -1,0 +1,36 @@
+
+<div class="container">
+
+  <div class="controls">
+    <!-- <input [(ngModel)]="nombrePartida" placeholder="Nombre de la partida" /> -->
+    <button (click)="guardarProgresoManual()">Guardar Partida</button>
+    <button (click)="reiniciarJuego()">Reiniciar Juego</button> <!-- Botón de reiniciar juego -->
+    <button (click)="volver()">volver</button>
+  </div>
+  <div class="boardContainer">
+    <div class="visualsContainer">
+      <app-timer [detener]="gameOver" [reset]="resetTimer"></app-timer>
+      <h2> 🚩{{ banderasRestantes }}</h2>
+    </div>
+
+    <div
+      class="board"
+      [style.grid-template-columns]="'repeat(' + cols + ', 30px)'"
+      [style.grid-template-rows]="'repeat(' + rows + ', 30px)'">
+      <div *ngFor="let row of board; let rowIndex = index">
+        <div
+          *ngFor="let cell of row; let colIndex = index"
+          class="cell"
+          [class.revelada]="cell.revelada"
+          [class.mine]="cell.revelada && cell.tieneMina"
+          [class.flagged]="cell.flagged"
+          (click)="revelarCelda(rowIndex, colIndex)"
+          (contextmenu)="colocarBandera($event, rowIndex, colIndex)">
+          <span *ngIf="cell.revelada && !cell.tieneMina">{{ cell.minasAdjacentes || '' }}</span>
+          <span *ngIf="cell.flagged">🚩</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

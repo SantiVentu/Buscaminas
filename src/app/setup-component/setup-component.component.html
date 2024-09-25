@@ -1,0 +1,17 @@
+<div class="setupContainer">
+
+  <div class="tarjeta">
+    <h2>Configurar Dificultad</h2>
+
+    <form (ngSubmit)="guardarOpciones()" style="margin-bottom: 30px;">
+      <label for="difficulty">Elija una dificultad:  </label>
+      <select id="difficulty" [(ngModel)]="difficulty" name="difficulty">
+        <option value="easy">Facíl (9x9, 10 minas)</option>
+        <option value="medium">Medio (16x16, 30 minas)</option>
+        <option value="hard">Dificíl (24x24, 80 minas)</option>
+      </select>
+    </form>
+    <button class="oauthButton" (click)="guardarOpciones()">Guardar</button>
+    <button class="oauthButton" (click)="volver()">volver</button>
+  </div>
+  </div>
