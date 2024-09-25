@@ -35,7 +35,7 @@ export class BoardComponentComponent implements OnInit {
   private gameConfigSubscription!: Subscription;
   private gameStateSubscription!: Subscription;
   loseSound = new Audio('/assets/loseSoundEffect.mp3');
-
+  winSound = new Audio('/assets/winSoundEffect.mp3');
   constructor(private _gameService: GameService, private _gameState: StateService, private router: Router) { };
 
   ngOnInit(): void {
@@ -268,6 +268,7 @@ export class BoardComponentComponent implements OnInit {
     }
 
     if (celdasReveladas === totalCells - mineCells) {
+      this.winSound.play();
       this.gameWon = true;
       this.detenerTemporizador = true;
       alert('¡Felicidades! Ganaste el juego.');
